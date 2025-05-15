@@ -2,15 +2,33 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "Pixelify Sans", sans-serif;
   }
 
   body {
-    width: 100%;
-    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+
+  .page-container {
+    display: flex;
+    width: 300%; 
+    height: 100vh;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .page {
+    width: 33.33%;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .page-1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: "Pixelify Sans", sans-serif;
+    align-items: center;
     background-image: url(./assets/cloud.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,11 +36,92 @@
     background-clip: padding-box;    
   }
 
+  .page-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(./assets/dawn.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-origin: padding-box;  
+    background-clip: padding-box;    
+}
+
+  .page-3 {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-image: url(./assets/night.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-origin: padding-box;  
+      background-clip: padding-box;    
+  }
+
+  .nav-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+  }
+
+  .nav-button {
+      padding: 12px 20px;
+      background-color: #e8cfa6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+  }
+
+  .nav-button:hover {
+      background-color: #dcb98a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .nav-button:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+  }
+
+  .page-container.showing-page-1 {
+      transform: translateX(0%);
+  }
+
+  .page-container.showing-page-2 {
+      transform: translateX(-33.33%);
+  }
+
+  .page-container.showing-page-3 {
+      transform: translateX(-66.66%);
+  }
+
+
+  .level-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
   .level {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-right: 100px;
+    padding-left: 100px;
   }
 
   .level .top-text {
@@ -32,6 +131,11 @@
   .level .pointer-container {
     margin-top: 20px;
     opacity: 0;
+  }
+
+  .pointer-container .pointer-img {
+    width: 70px;
+    height: auto;
   }
 
   .level-container {
@@ -46,6 +150,14 @@
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  .level-container #broken-sprite {
+    position: absolute;
+    top: 33;
+    left: 65;
+    width: 50%;
+    height: 70%;
   }
 
   .level-container .overlay {
@@ -82,6 +194,13 @@
     height: 70%;
   }
 
+  #boss-container .subbase-content {
+    top: 18;
+    left: 23;
+    width: 50;
+    height: auto;
+  }
+
   .level-container:hover .base {
     animation: jump-shaking 0.83s infinite;
   }
@@ -89,7 +208,7 @@
   .level-container:hover .subbase-container {
     animation: jump-shaking 0.83s infinite;
   }
-
+  
 
   .level-container:hover .overlay {
     animation: jump-shaking 0.83s infinite;
@@ -104,6 +223,75 @@
     opacity: 1;
   }
   
+  #boss-container:hover .base {
+    animation: skew-x-shaking 0.83s infinite;
+  }
+
+  #boss-container:hover .subbase-container {
+    animation: skew-x-shaking 0.83s infinite;
+  }
+  
+
+  #boss-container:hover .overlay {
+    animation: skew-x-shaking 0.83s infinite;
+    opacity: 1;                
+  }
+
+  #boss-container:hover .content {
+    animation: skew-x-shaking 0.83s infinite;
+  }
+
+  #boss-container:hover ~ .pointer-container {
+    animation: skew-x-shaking 0.83s infinite;
+    opacity: 1;
+  }
+
+  *:has(#pikachu-container:hover) + .dialogue-container .dialogue {
+    --text: "Ahhh... Pikachu... Although not my personal favorite pokemon, I can't help but to choose for my ASCII mosaic project! ";
+  }
+
+  *:has(#boss-container:hover) + .dialogue-container .dialogue {
+    --text: "WArnInG... dANgeRouS enEMYy aHEaD, ANd IT GEts a BIt... 'PERSONAL'";
+  }
+
+  *:has(#stillife-container:hover) + .dialogue-container .dialogue {
+    --text: "I used to be a horrible artist. Then I took a CSS lesson in the knee...";
+  }
+
+  .dialogue-container {
+    position: relative;
+    width: 805px;
+    height: 301px;
+    padding-top: 50px;
+  }
+
+  .dialogue-container .title {
+    position: absolute;
+    font-size: 40px;
+    color: #6b4b5b;
+    top: 85;
+    left: 295;
+  }
+
+  .dialogue-container img {
+    width: inherit;
+    height: inherit;
+  }
+
+  .dialogue-container .dialogue {
+    width: 430px;
+    position: absolute;
+    font-size: 20px;
+    top: 165;
+    left: 310;
+    color: #6b4b5b;
+    --text: "Welcome to my portfolio! Feel free to explore around."
+  }
+
+  .dialogue-container .dialogue::before {
+    content: var(--text);
+  }
+  
   
   @keyframes jump-shaking {
     0% { transform: translateX(0) }
@@ -113,4 +301,108 @@
     65% { transform: translateY(-9px) rotate(5deg) }
     75% { transform: translateY(-9px) rotate(-5deg) }
     100% { transform: translateY(0) rotate(0) }
+}
+
+@keyframes skew-x-shaking {
+    0% { transform: skewX(-15deg); }
+    5% { transform: skewX(15deg); }
+    10% { transform: skewX(-15deg); }
+    15% { transform: skewX(15deg); }
+    20% { transform: skewX(0deg); }
+    100% { transform: skewX(0deg); }
+}
+
+#stillife-container .subbase-content {
+  position: absolute;
+  top: 15;
+  left: 28;
+  width: 40;
+  height: auto;
+}
+
+#still-life {
+  width: 120px;
+  height: auto;
+  top: 55;
+  left: 60;
+}
+
+
+#webring-container .content {
+  position: absolute;
+  top: 50;
+  left: 60;
+  width: 120px;
+  height: auto;
+}
+
+#pokemon-container .subbase-content {
+  position: absolute;
+  top: 15;
+  left: 28;
+  width: 40;
+  height: auto;
+}
+
+*:has(#webring-container:hover) + .dialogue-container .dialogue {
+  --text: "Thank you Zara for this awesome webring design! Check out her portfolio as well!";
+}
+
+*:has(#boss2-container:hover) + .dialogue-container .dialogue {
+  --text: "We just need to keep going till 0:00... Almost there! (Unless you sleep late, then you got another stretch to go!)";
+}
+
+*:has(#pokemon-container:hover) + .dialogue-container .dialogue {
+  --text: "What pokemons could possibly be in these 5 pokeballs? Well, open them all to find out!";
+}
+
+#dizzy-sprite {
+  width: 120px;
+  height: auto;
+  top: 55;
+  left: 60;
+}
+
+#pixel-p5 {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  top: 5;
+  left: 3;
+}
+
+#controller-container .content {
+  position: absolute;
+  width: 140px;
+  height: auto;
+  top: 45;
+  left: 48;
+}
+
+#js-logo {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  top: 4;
+  left: 3;
+}
+
+#download {
+  width: 130px;
+  height: auto;
+  top: 48;
+  left: 55;
+}
+
+
+*:has(#controller-container:hover) + .dialogue-container .dialogue {
+  --text: "You say Subway Surfers is an easy game? Then try moving you characters through JavaScript then!";
+}
+
+*:has(#boss3-container:hover) + .dialogue-container .dialogue {
+  --text: "I got a code generator for you here, it's not Claude, ChatGPT, but it does have a twist to it...";
+}
+
+*:has(#download-container:hover) + .dialogue-container .dialogue {
+  --text: "Got a pretty sick browser extenstion here, download this and you'll never need to worry about those fake download buttons again!";
 }
